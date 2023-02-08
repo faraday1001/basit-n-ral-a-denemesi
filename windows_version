@@ -1,0 +1,27 @@
+import tensorflow as tf
+import numpy as np
+
+# Kullanıcı verilerini al
+weight = int(input("Lütfen kilonuzu kg cinsinden girin: "))
+height = int(input("Lütfen boyunuzu cm cinsinden girin: "))
+
+# Verilerin yüklenmesi
+X = np.array([[58, 68], [59, 72], [65, 68], [66, 71], [71, 75], [67, 72], [70, 68]])
+Y = np.array([0, 0, 0, 0, 1, 1, 1])
+
+# Model tanımlama
+model = tf.keras.models.Sequential([
+    tf.keras.layers.Dense(1, activation='sigmoid', input_shape=(2,))
+])
+
+# Model eğitimi
+model.compile(optimizer='adam',
+              loss='binary_crossentropy',
+              metrics=['accuracy'])
+
+model.fit(X, Y, epochs=100)
+
+# Tahmin yapma
+new_data = np.array([[weight, height]])
+prediction = model.predict(new_data)
+print('Prediction:', prediction)
